@@ -12,7 +12,6 @@ let game;
 const restartBtn = document.getElementById("restart-btn");
 restartBtn.addEventListener("click", startGame);
 
-// Keyboard Control
 document.addEventListener("keydown", event => {
     if (event.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
     else if (event.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
@@ -20,9 +19,9 @@ document.addEventListener("keydown", event => {
     else if (event.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
 });
 
-// Start or Restart Game
+
 function startGame() {
-    clearInterval(game); // stop previous game
+    clearInterval(game); 
 
     score = 0;
     document.getElementById("score").innerText = "Score: " + score;
@@ -44,18 +43,17 @@ function startGame() {
 function drawGame() {
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, 400, 400);
-
-    // Draw snake
+    
     for (let i = 0; i < snake.length; i++) {
         ctx.fillStyle = i === 0 ? "#00ff99" : "white";
         ctx.fillRect(snake[i].x, snake[i].y, box, box);
     }
 
-    // Draw food
+    
     ctx.fillStyle = "red";
     ctx.fillRect(food.x, food.y, box, box);
 
-    // Snake movement
+    
     let headX = snake[0].x;
     let headY = snake[0].y;
 
@@ -64,7 +62,6 @@ function drawGame() {
     if (direction === "UP") headY -= box;
     if (direction === "DOWN") headY += box;
 
-    // Food collision
     if (headX === food.x && headY === food.y) {
         score++;
         document.getElementById("score").innerText = "Score: " + score;
@@ -78,7 +75,7 @@ function drawGame() {
 
     let newHead = { x: headX, y: headY };
 
-    // Game Over
+    
     if (
         headX < 0 || headX >= 400 ||
         headY < 0 || headY >= 400 ||
@@ -87,7 +84,7 @@ function drawGame() {
         clearInterval(game);
         alert("Game Over! Score: " + score);
 
-        // Auto Restart after Game Over
+        
         startGame();
         return;
     }
@@ -95,5 +92,6 @@ function drawGame() {
     snake.unshift(newHead);
 }
 
-// Start game on page load
+
+
 startGame();
